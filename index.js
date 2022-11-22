@@ -1,4 +1,4 @@
-import {Tasksave, getTasks, ongetTask} from './firebase.js';
+import {Tasksave, getTasks, ongetTask , deleteTask} from './firebase.js';
 
 const taskform = document.getElementById('task-form');
 const taskContainer = document.getElementById('tasks-container');
@@ -13,10 +13,17 @@ window.addEventListener('DOMContentLoaded', async () => {
     <div>
     <h3>${task.title}</h3>
     <p>${task.description}</p>
+    <button class="btn-delete" data-id="${doc.id}">Delete</button>
     </div>`
-  } );
-  taskContainer.innerHTML= html;
-});
+     } );
+    taskContainer.innerHTML= html;
+    const btnTaskdelete = taskContainer.querySelectorAll('.btn-delete');
+    btnTaskdelete.forEach( btn =>{
+    btn.addEventListener("click", ({ target: { dataset } })=>{
+       deleteTask(dataset.id);
+    })
+  })
+ });
 });
 
 
